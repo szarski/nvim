@@ -47,7 +47,7 @@ function! Elocal ()
 endfunction
 
 " NERDTree
-:so $HOME/.vim/config/NERDTree_config.vim
+:so $HOME/.config/nvim/config/NERDTree_config.vim
 nmap <Esc><Esc> :call SmartToggleNerdTree() <CR>
 
 " start in workspace dir
