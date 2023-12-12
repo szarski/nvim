@@ -1,3 +1,6 @@
+  call plug#begin()
+  call plug#end()
+
   " normal mode
   nmap <C-l> :bn <CR>
   nmap <C-h> :bp <CR>
