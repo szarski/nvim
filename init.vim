@@ -4,13 +4,18 @@
     Plug 'romgrk/barbar.nvim'
   call plug#end()
 
-  " normal mode
-  nmap <C-l> :bn <CR>
-  nmap <C-h> :bp <CR>
-  nmap <C-m> :bd <CR>
+  " " normal mode
+  " nmap <C-l> :bn <CR>
+  " nmap <C-h> :bp <CR>
+  " nmap <C-m> :bd <CR>
 
   map <C-j> 5j
   map <C-k> 5k
+
+  " barbar mappings
+  nnoremap <silent>    <C-l> <Cmd>BufferPrevious<CR>
+  nnoremap <silent>    <C-h> <Cmd>BufferNext<CR>
+  nnoremap <silent>    <C-m> <Cmd>BufferClose<CR>
 
   " command mode
   cnoremap <C-a> <Home>
