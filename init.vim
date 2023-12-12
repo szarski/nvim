@@ -44,3 +44,7 @@
     let dir = getcwd()
     return ":e " . expand('%:p:h') . "/"
   endfunction
+
+  " NERDTree
+  :so $HOME/.vim/config/NERDTree_config.vim
+  nmap <Esc><Esc> :call SmartToggleNerdTree() <CR>
