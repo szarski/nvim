@@ -7,7 +7,15 @@ call plug#begin()
   Plug 'romgrk/barbar.nvim'
   Plug 'preservim/nerdtree'
   Plug 'airblade/vim-rooter'
+
+  " Stuff for Elixir LSP
+  Plug 'hrsh7th/nvim-cmp'
+  Plug 'hrsh7th/cmp-buffer'
+  Plug 'hrsh7th/cmp-nvim-lsp'
+  Plug 'hrsh7th/vim-vsnip'
+  Plug 'neovim/nvim-lspconfig'
 call plug#end()
+PlugInstall | quit
 
 " " normal mode
 " nmap <C-l> :bn <CR>
@@ -65,3 +73,6 @@ set colorcolumn=120
 highlight cursor guifg=yellow guibg=red
 highlight iCursor guifg=red guibg=white
 highlight visual guifg=red guibg=yellow
+
+" configure Language Server
+:so $HOME/.config/nvim/config/lsp_config.vim
