@@ -1,3 +1,6 @@
+  let g:loaded_netrw       = 1
+  let g:loaded_netrwPlugin = 1
+
   call plug#begin()
     Plug 'lewis6991/gitsigns.nvim' " OPTIONAL: for git status
     Plug 'nvim-tree/nvim-web-devicons' " OPTIONAL: for file icons
@@ -30,7 +33,7 @@
   set clipboard+=unnamedplus
 
   " replace tabs with spaces
-  set shiftwidth=4 smarttab
+  set shiftwidth=2 smarttab
   set expandtab
   set tabstop=8 softtabstop=0
 
