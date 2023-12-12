@@ -5,6 +5,7 @@
     Plug 'lewis6991/gitsigns.nvim' " OPTIONAL: for git status
     Plug 'nvim-tree/nvim-web-devicons' " OPTIONAL: for file icons
     Plug 'romgrk/barbar.nvim'
+    Plug 'preservim/nerdtree'
   call plug#end()
 
   " " normal mode
