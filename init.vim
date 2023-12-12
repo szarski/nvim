@@ -52,3 +52,16 @@ nmap <Esc><Esc> :call SmartToggleNerdTree() <CR>
 
 " start in workspace dir
 cd $HOME/workspace
+
+" enable line nubmers
+set number
+
+" disable coursor animation
+let g:neovide_cursor_animation_length = 0
+
+" color coursor, selection and overlength content
+highlight ColorColumn ctermbg=magenta guibg=IndianRed3
+set colorcolumn=120
+highlight cursor guifg=yellow guibg=red
+highlight iCursor guifg=red guibg=white
+highlight visual guifg=red guibg=yellow
