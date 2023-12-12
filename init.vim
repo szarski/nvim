@@ -14,3 +14,11 @@
   cnoremap <C-n> <Down>
   cnoremap <C-b> <Left>
   cnoremap <C-f> <Right>
+
+  " use system clipboard
+  set clipboard+=unnamedplus
+
+  " replace tabs with spaces
+  set shiftwidth=4 smarttab
+  set expandtab
+  set tabstop=8 softtabstop=0
