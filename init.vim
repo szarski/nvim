@@ -22,6 +22,9 @@ call plug#begin()
   Plug 'sharkdp/fd' " (finder)
   Plug 'nvim-treesitter/nvim-treesitter' " (finder/preview)
   Plug 'nvim-tree/nvim-web-devicons' " (icons)
+
+  " colorschemes
+  Plug 'folke/tokyonight.nvim'
 call plug#end()
 PlugInstall | quit
 
