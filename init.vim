@@ -86,6 +86,7 @@ highlight visual guifg=red guibg=yellow
 :so $HOME/.config/nvim/config/lsp_config.vim
 
 " configure Telescope shortcuts
+:so $HOME/.config/nvim/config/telescope_config.vim
 nnoremap <leader>ff <cmd>Telescope find_files<cr>
 nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
