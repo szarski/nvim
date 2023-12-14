@@ -14,6 +14,14 @@ call plug#begin()
   Plug 'hrsh7th/cmp-nvim-lsp'
   Plug 'hrsh7th/vim-vsnip'
   Plug 'neovim/nvim-lspconfig'
+
+  " Telescope
+  Plug 'nvim-lua/plenary.nvim'
+  Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.5' }
+  Plug 'BurntSushi/ripgrep'
+  Plug 'sharkdp/fd' " (finder)
+  Plug 'nvim-treesitter/nvim-treesitter' " (finder/preview)
+  Plug 'nvim-tree/nvim-web-devicons' " (icons)
 call plug#end()
 PlugInstall | quit
 
