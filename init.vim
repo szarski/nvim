@@ -25,8 +25,11 @@ call plug#begin()
 
   " colorschemes
   Plug 'folke/tokyonight.nvim'
+  Plug 'catppuccin/nvim'
 call plug#end()
 PlugInstall | quit
+
+colorscheme catppuccin-mocha
 
 " " normal mode
 " nmap <C-l> :bn <CR>
