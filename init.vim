@@ -60,6 +60,8 @@ cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
 cnoremap <C-b> <Left>
 cnoremap <C-f> <Right>
+" CMD-v for paste in normal mode
+nnoremap <D-v> p
 " CMD-v for paste in command mode
 cnoremap <D-v> <C-r>"
 " CMD-v for paste in insert mode
@@ -69,7 +71,7 @@ snoremap <D-c> "+y
 vnoremap <D-c> "+y
 " CMD-c for cut in select mode
 snoremap <D-x> "+d
-snoremap <D-x> "+d
+vnoremap <D-x> "+d
 
 " use system clipboard
 set clipboard+=unnamedplus
