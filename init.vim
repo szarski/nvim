@@ -126,3 +126,7 @@ nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 " keyboard shortcuts)
 let g:neovide_confirm_quit = v:true
 noremap <D-q> <nop>
+
+" Configure vim-rooter to only look at the Git directory (fixes the issue with
+" umbrella apps)
+let g:rooter_patterns = ['.git']
