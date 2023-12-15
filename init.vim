@@ -118,4 +118,7 @@ nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
-g:neovide_confirm_quit=1
+" Disable CMD-q (doesn't appear to work, need to disable CMD-q in system
+" keyboard shortcuts)
+let g:neovide_confirm_quit = v:true
+noremap <D-q> <nop>
