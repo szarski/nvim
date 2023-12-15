@@ -111,8 +111,9 @@ highlight visual guifg=red guibg=yellow
 
 " configure Telescope shortcuts
 :so $HOME/.config/nvim/config/telescope_config.vim
-nnoremap <D-a> <cmd>Telescope find_files<cr>
+nnoremap <D-t> <cmd>Telescope find_files<cr>
 nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <D-g> <cmd>Telescope live_grep<cr>
 nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
