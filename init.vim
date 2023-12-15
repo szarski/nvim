@@ -60,7 +60,16 @@ cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
 cnoremap <C-b> <Left>
 cnoremap <C-f> <Right>
+" CMD-v for paste in command mode
 cnoremap <D-v> <C-r>"
+" CMD-v for paste in insert mode
+inoremap <D-v> <C-r>"
+" CMD-c for copy in select mode
+snoremap <D-c> "+y
+vnoremap <D-c> "+y
+" CMD-c for cut in select mode
+snoremap <D-x> "+d
+snoremap <D-x> "+d
 
 " use system clipboard
 set clipboard+=unnamedplus
@@ -107,3 +116,5 @@ nnoremap <leader>ff <cmd>Telescope find_files<cr>
 nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+
+g:neovide_confirm_quit=1
