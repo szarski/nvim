@@ -67,7 +67,7 @@ vnoremap <D-v> p
 " CMD-v for paste in command mode (works with system clipboard)
 cnoremap <D-v> <C-r>+
 " CMD-v for paste in insert mode (works with system clipboard)
-inoremap <D-v> <ESC>"+pa
+inoremap <D-v> <C-r>+
 " CMD-c for copy in select mode
 snoremap <D-c> "+y
 vnoremap <D-c> "+y
