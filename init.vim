@@ -45,9 +45,11 @@ colorscheme catppuccin-mocha
 map <C-j> 5j
 map <C-k> 5k
 
+map <D-a> ggVG<CR>
+
 " barbar mappings
-nnoremap <silent>    <C-l> <Cmd>BufferPrevious<CR>
-nnoremap <silent>    <C-h> <Cmd>BufferNext<CR>
+nnoremap <silent>    <C-l> <Cmd>BufferNext<CR>
+nnoremap <silent>    <C-h> <Cmd>BufferPrevious<CR>
 nnoremap <silent>    <C-m> <Cmd>BufferClose<CR>
 
 " command mode
@@ -58,6 +60,7 @@ cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
 cnoremap <C-b> <Left>
 cnoremap <C-f> <Right>
+cnoremap <D-v> <C-r>"
 
 " use system clipboard
 set clipboard+=unnamedplus
@@ -99,6 +102,7 @@ highlight visual guifg=red guibg=yellow
 
 " configure Telescope shortcuts
 :so $HOME/.config/nvim/config/telescope_config.vim
+nnoremap <D-a> <cmd>Telescope find_files<cr>
 nnoremap <leader>ff <cmd>Telescope find_files<cr>
 nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
