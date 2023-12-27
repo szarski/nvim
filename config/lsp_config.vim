@@ -45,6 +45,7 @@ lua <<EOF
   local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
   require('lspconfig').elixirls.setup {
     root_dir = vim.fs.dirname(vim.fs.find({'.git'}, { upward = true })[1]),
+    cmd_env = { ASDF_DIR = "/usr/local/opt/asdf/libexec/" },
     cmd = { "/Users/jacek.szarski/workspace/lib/elixir-ls/rel/language_server.sh" };
     capabilities = capabilities
   }
