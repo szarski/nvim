@@ -3,113 +3,50 @@ lua <<EOF
   local cmp = require'cmp'
 
   cmp.setup({
-    snippet = {
-      -- REQUIRED - you must specify a snippet engine
-      expand = function(args)
-        vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-        -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-        -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
-        -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
-      end,
-    },
-    window = {
-      -- completion = cmp.config.window.bordered(),
-      -- documentation = cmp.config.window.bordered(),
-    },
-    mapping = cmp.mapping.preset.insert({
-      ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-      ['<C-f>'] = cmp.mapping.scroll_docs(4),
-      ['<C-Space>'] = cmp.mapping.complete(),
-      ['<C-e>'] = cmp.mapping.abort(),
-      ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-    }),
     sources = cmp.config.sources({
       { name = 'nvim_lsp' },
-      { name = 'vsnip' }, -- For vsnip users.
-      -- { name = 'luasnip' }, -- For luasnip users.
-      -- { name = 'ultisnips' }, -- For ultisnips users.
-      -- { name = 'snippy' }, -- For snippy users.
-    }, {
-      { name = 'buffer' },
     })
   })
 
-  -- Set configuration for specific filetype.
-  cmp.setup.filetype('gitcommit', {
-    sources = cmp.config.sources({
-      { name = 'cmp_git' }, -- You can specify the `cmp_git` source if you were installed it.
-    }, {
-      { name = 'buffer' },
-    })
-  })
-
---  -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
---  cmp.setup.cmdline('/', {
---    mapping = cmp.mapping.preset.cmdline(),
---    sources = {
---      { name = 'buffer' }
---    }
---  })
---
---  -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
---  cmp.setup.cmdline(':', {
---    mapping = cmp.mapping.preset.cmdline(),
---    sources = cmp.config.sources({
---      { name = 'path' }
---    }, {
---      { name = 'cmdline' }
---    })
---  })
-
-
-
-
--- Mappings.
--- See `:help vim.diagnostic.*` for documentation on any of the below functions
-local opts = { noremap=true, silent=true }
-vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
-vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
-
--- Use an on_attach function to only map the following keys
--- after the language server attaches to the current buffer
-local on_attach = function(client, bufnr)
-  -- Enable completion triggered by <c-x><c-o>
-  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-  -- Mappings.
-  -- See `:help vim.lsp.*` for documentation on any of the below functions
+  -- lsp mappings
   local bufopts = { noremap=true, silent=true, buffer=bufnr }
   vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
   vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
-  vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
-  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
-  vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
-  vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
-  vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
-  vim.keymap.set('n', '<space>wl', function()
-    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-  end, bufopts)
-  vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
-  vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
-  vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
-  vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-  vim.keymap.set('n', '<space>f', vim.lsp.buf.formatting, bufopts)
-end
 
-local lsp_flags = {
-  -- This is the default in Nvim 0.7+
-  debounce_text_changes = 150,
-}
 
-  -- Setup lspconfig.
-local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
-require('lspconfig').elixirls.setup {
-  -- Path for elixir-ls installed via HomeBrew
-  -- cmd = {'/usr/local/Cellar/elixir-ls/0.17.10/bin/elixir-ls'},
-  -- root_dir = vim.fs.dirname(vim.fs.find({'.git', '.gitignore'}, { upward = true })[1]),
-  cmd = { "/Users/jacek.szarski/workspace/lib/elixir-ls/rel/language_server.sh" };
-  capabilities = capabilities
-}
+  -- setup lexical LS
+  local lspconfig = require("lspconfig")
+  local configs = require("lspconfig.configs")
+
+  local lexical_config = {
+    filetypes = { "elixir", "eelixir", "heex" },
+    cmd = { "/Users/jacek.szarski/workspace/lib/lexical/_build/dev/package/lexical/bin/start_lexical.sh" },
+    settings = {},
+  }
+
+  if not configs.lexical then
+    configs.lexical = {
+      default_config = {
+        filetypes = lexical_config.filetypes,
+        cmd = lexical_config.cmd,
+        root_dir = function(fname)
+          return lspconfig.util.root_pattern(".git")(fname)
+        end,
+        -- optional settings
+        settings = lexical_config.settings,
+      },
+    }
+  end
+
+  lspconfig.lexical.setup({})
+
+      
+  -- setup elixir-ls LS
+  local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
+  require('lspconfig').elixirls.setup {
+    root_dir = vim.fs.dirname(vim.fs.find({'.git'}, { upward = true })[1]),
+    cmd = { "/Users/jacek.szarski/workspace/lib/elixir-ls/rel/language_server.sh" };
+    capabilities = capabilities
+  }
+      
 EOF
