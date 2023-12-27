@@ -53,7 +53,7 @@ lua <<EOF
     local map_opts = {noremap = true, silent = true}
 
     map("n", "df", "<cmd>lua vim.lsp.buf.formatting()<cr>", map_opts)
-    map("n", "gd", "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<cr>", map_opts)
+    map("n", "gd", "<cmd>lua vim.diagnostic.open_float()<cr>", map_opts)
     map("n", "dt", "<cmd>lua vim.lsp.buf.definition()<cr>", map_opts)
     map("n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>", map_opts)
     map("n", "gD", "<cmd>lua vim.lsp.buf.implementation()<cr>", map_opts)
@@ -79,7 +79,7 @@ lua <<EOF
     vim.cmd [[inoremap <silent><expr> <C-d> compe#scroll({ 'delta': -4 })]]
 
     -- tell nvim-cmp about our desired capabilities
-    require("cmp_nvim_lsp").update_capabilities(capabilities)
+    require("cmp_nvim_lsp").default_capabilities(capabilities)
   end
 
   -- Finally, let's initialize the Elixir language server
