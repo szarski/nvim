@@ -16,6 +16,7 @@ call plug#begin()
   Plug 'hrsh7th/vim-vsnip'
 
   Plug 'onsails/lspkind-nvim'
+  Plug 'ryanoasis/vim-devicons'
 
   " Other CMP plugins
   "Plug 'hrsh7th/cmp-cmdline'
