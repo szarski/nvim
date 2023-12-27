@@ -18,11 +18,11 @@ call plug#begin()
   Plug 'onsails/lspkind-nvim'
 
   " Other CMP plugins
-  Plug 'hrsh7th/cmp-cmdline'
+  "Plug 'hrsh7th/cmp-cmdline'
   "Plug 'hrsh7th/cmp-buffer'
   "Plug 'hrsh7th/cmp-path'
 
-  Plug 'sbdchd/neoformat'
+  "Plug 'sbdchd/neoformat'
 
   " For vsnip users.
   "Plug 'hrsh7th/vim-vsnip'
