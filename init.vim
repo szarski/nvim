@@ -2,7 +2,6 @@ let g:loaded_netrw       = 1
 let g:loaded_netrwPlugin = 1
 
 call plug#begin()
-  Plug 'lewis6991/gitsigns.nvim' " OPTIONAL: for git status
   Plug 'nvim-tree/nvim-web-devicons' " OPTIONAL: for file icons
   Plug 'romgrk/barbar.nvim'
   Plug 'preservim/nerdtree'
@@ -17,6 +16,10 @@ call plug#begin()
 
   Plug 'onsails/lspkind-nvim'
   Plug 'ryanoasis/vim-devicons'
+
+  " Git integration
+  Plug 'tpope/vim-fugitive'
+  Plug 'lewis6991/gitsigns.nvim'
 
   " Other CMP plugins
   "Plug 'hrsh7th/cmp-cmdline'
@@ -138,3 +141,6 @@ noremap <D-q> <nop>
 " Configure vim-rooter to only look at the Git directory (fixes the issue with
 " umbrella apps)
 let g:rooter_patterns = ['.git']
+
+" configure GitSigns
+:so $HOME/.config/nvim/config/git_config.vim
