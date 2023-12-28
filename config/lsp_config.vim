@@ -80,7 +80,8 @@ lua <<EOF
 
   local lspconfig = require("lspconfig")
   lspconfig.elixirls.setup({
-    cmd = {path_to_elixirls},
+    cmd_env = { ASDF_DIR = "/usr/local/opt/asdf/libexec" },
+    cmd = { path_to_elixirls },
     capabilities = capabilities,
     on_attach = on_attach,
     settings = {
