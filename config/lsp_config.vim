@@ -31,13 +31,6 @@ lua <<EOF
     },
   })
 
-
-  -- Neovim doesn't support snippets out of the box, so we need to mutate the
-  -- capabilities we send to the language server to let them know we want snippets.
-  local capabilities = vim.lsp.protocol.make_client_capabilities()
-  capabilities.textDocument.completion.completionItem.snippetSupport = true
-
-
   -- A callback that will get called when a buffer connects to the language server.
   -- Here we create any key maps that we want to have on that buffer.
   local on_attach = function(_, bufnr)
@@ -71,9 +64,6 @@ lua <<EOF
       --  vim.cmd [[inoremap <silent><expr> <C-e> compe#close('<C-e>')]]
       --  vim.cmd [[inoremap <silent><expr> <C-f> compe#scroll({ 'delta': +4 })]]
       --  vim.cmd [[inoremap <silent><expr> <C-d> compe#scroll({ 'delta': -4 })]]
-
-    -- tell nvim-cmp about our desired capabilities
-    require("cmp_nvim_lsp").default_capabilities(capabilities)
   end
 
   -- Finally, let's initialize the Elixir language server
@@ -81,8 +71,14 @@ lua <<EOF
   -- Replace the following with the path to your installation
   local path_to_elixirls = vim.fn.expand("/Users/jacek.szarski/workspace/lib/elixir-ls/rel/language_server.sh")
 
-  local lspconfig = require("lspconfig")
+  -- Neovim doesn't support snippets out of the box, so we need to mutate the
+  -- capabilities we send to the language server to let them know we want snippets.
+  local lsp_capabilities = vim.lsp.protocol.make_client_capabilities()
+  lsp_capabilities.textDocument.completion.completionItem.snippetSupport = true
+  -- tell nvim-cmp about our desired capabilities
+  local capabilities = require("cmp_nvim_lsp").default_capabilities(lsp_capabilities)
 
+  local lspconfig = require("lspconfig")
   lspconfig.elixirls.setup({
     cmd = {path_to_elixirls},
     capabilities = capabilities,
