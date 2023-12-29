@@ -68,15 +68,8 @@ lua <<EOF
 
   -- Finally, let's initialize the Elixir language server
 
-  -- Replace the following with the path to your installation
-
-
-        -- this starts nicely but never attaches
-      --local path_to_elixirls = vim.fn.expand("/Users/jacek.szarski/workspace/lib/elixir-ls/versions/1.13-24.3/language_server.sh")
-      --local cmd_env = { ASDF_DIR = "/usr/local/opt/asdf/libexec" }
-        -- this will only run when ASDF_DIR is not specified (so it's using ruby 1.16 instead of the one from the project)
-        local path_to_elixirls = vim.fn.expand("/Users/jacek.szarski/workspace/lib/elixir-ls/versions/1.16-25/language_server.sh")
-        local cmd_env = { }
+  -- I'm proxying via a script that sets up asdf
+  local path_to_elixirls = vim.fn.expand("/Users/jacek.szarski/workspace/lib/elixir-ls/run.sh")
 
   -- Neovim doesn't support snippets out of the box, so we need to mutate the
   -- capabilities we send to the language server to let them know we want snippets.
@@ -87,7 +80,6 @@ lua <<EOF
 
   local lspconfig = require("lspconfig")
   lspconfig.elixirls.setup({
-    cmd_env = cmd_env,
     cmd = { path_to_elixirls },
     capabilities = capabilities,
     on_attach = on_attach,
