@@ -11,8 +11,12 @@ lua <<EOF
   vim.api.nvim_create_autocmd('LspAttach', {
     group = vim.api.nvim_create_augroup('UserLspConfig', {}),
     callback = function(ev)
-      -- Enable completion triggered by <c-x><c-o>
-      vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
+
+      -- "If you are using nvim-cmp do not use neovim's built-in omnifunc as it cannot support
+      -- the additional completion items returned from servers due to the capabilities enabled by nvim-cmp."
+      -- (https://github.com/neovim/nvim-lspconfig/wiki/Autocompletion#nvim-cmp)
+        -- Enable completion triggered by <c-x><c-o>
+        --vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
 
       -- Buffer local mappings.
       -- See `:help vim.lsp.*` for documentation on any of the below functions
@@ -66,4 +70,51 @@ lua <<EOF
   if vim.fn.has 'nvim-0.5.1' == 1 then
     require('vim.lsp.log').set_format_func(vim.inspect)
   end
+
+  -- Setting up autocompletion according to https://github.com/neovim/nvim-lspconfig/wiki/Autocompletion
+
+  -- luasnip setup
+  local luasnip = require 'luasnip'
+
+  -- nvim-cmp setup
+  local cmp = require 'cmp'
+  cmp.setup {
+    snippet = {
+      expand = function(args)
+        luasnip.lsp_expand(args.body)
+      end,
+    },
+    mapping = cmp.mapping.preset.insert({
+      ['<C-u>'] = cmp.mapping.scroll_docs(-4), -- Up
+      ['<C-d>'] = cmp.mapping.scroll_docs(4), -- Down
+      -- C-b (back) C-f (forward) for snippet placeholder navigation.
+      ['<C-Space>'] = cmp.mapping.complete(),
+      ['<CR>'] = cmp.mapping.confirm {
+        behavior = cmp.ConfirmBehavior.Replace,
+        select = true,
+      },
+      ['<Tab>'] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+          cmp.select_next_item()
+        elseif luasnip.expand_or_jumpable() then
+          luasnip.expand_or_jump()
+        else
+          fallback()
+        end
+      end, { 'i', 's' }),
+      ['<S-Tab>'] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+          cmp.select_prev_item()
+        elseif luasnip.jumpable(-1) then
+          luasnip.jump(-1)
+        else
+          fallback()
+        end
+      end, { 'i', 's' }),
+    }),
+    sources = {
+      { name = 'nvim_lsp' },
+      { name = 'luasnip' },
+    },
+  }
 EOF
