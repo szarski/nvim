@@ -69,7 +69,9 @@ lua <<EOF
   -- Finally, let's initialize the Elixir language server
 
   -- I'm proxying via a script that sets up asdf
-  local path_to_elixirls = vim.fn.expand("/Users/jacek.szarski/workspace/lib/elixir-ls/run.sh")
+  --local path_to_elixirls = vim.fn.expand("/Users/jacek.szarski/workspace/lib/elixir-ls/runners/0.18.0.sh")
+  --local path_to_elixirls = vim.fn.expand("/Users/jacek.szarski/workspace/lib/elixir-ls/runners/1.13-25.1.sh")
+  local path_to_elixirls = vim.fn.expand("/Users/jacek.szarski/workspace/lib/elixir-ls/runners/1.13-24.3.sh")
 
   -- Neovim doesn't support snippets out of the box, so we need to mutate the
   -- capabilities we send to the language server to let them know we want snippets.
@@ -93,11 +95,13 @@ lua <<EOF
         -- I also choose to turn off the auto dep fetching feature.
         -- It often get's into a weird state that requires deleting
         -- the .elixir_ls directory and restarting your editor.
-        fetchDeps = false
+        fetchDeps = false,
+        suggestSpecs = true,
+        autoBuild = true
       }
     }
   })
-  vim.lsp.set_log_level('trace')
+  vim.lsp.set_log_level('info')
   if vim.fn.has 'nvim-0.5.1' == 1 then
     require('vim.lsp.log').set_format_func(vim.inspect)
   end
