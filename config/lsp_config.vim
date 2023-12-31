@@ -57,6 +57,7 @@ lua <<EOF
       vim.keymap.set('n', '<space>f', function()
         vim.lsp.buf.format { async = true }
       end, opts)
+      vim.print("LSP attached.")
     end,
   })
 
