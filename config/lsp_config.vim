@@ -31,43 +31,41 @@ lua <<EOF
     },
   })
 
-  -- A callback that will get called when a buffer connects to the language server.
-  -- Here we create any key maps that we want to have on that buffer.
-  local on_attach = function(_, bufnr)
-    local function map(...)
-      vim.api.nvim_buf_set_keymap(bufnr, ...)
-    end
-    local map_opts = {noremap = true, silent = true}
+  -- Global mappings.
+  -- See `:help vim.diagnostic.*` for documentation on any of the below functions
+  vim.keymap.set('n', '<space>o', vim.diagnostic.open_float)
+  vim.keymap.set('n', '<space>k', vim.diagnostic.goto_prev)
+  vim.keymap.set('n', '<space>j', vim.diagnostic.goto_next)
+  vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
 
-    map("n", "df", "<cmd>lua vim.lsp.buf.formatting()<cr>", map_opts)
-    map("n", "gd", "<cmd>lua vim.diagnostic.open_float()<cr>", map_opts)
-    map("n", "dt", "<cmd>lua vim.lsp.buf.definition()<cr>", map_opts)
-    map("n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>", map_opts)
-    map("n", "gD", "<cmd>lua vim.lsp.buf.implementation()<cr>", map_opts)
-    map("n", "gK", "<cmd>lua vim.lsp.buf.signature_help()<cr>", map_opts)
-    map("n", "1gD", "<cmd>lua vim.lsp.buf.type_definition()<cr>", map_opts)
+  -- Use LspAttach autocommand to only map the following keys
+  -- after the language server attaches to the current buffer
+  vim.api.nvim_create_autocmd('LspAttach', {
+    group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+    callback = function(ev)
+      -- Enable completion triggered by <c-x><c-o>
+      vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
 
-    -- These have a different style than above because I was fiddling
-    -- around and never converted them. Instead of converting them
-    -- now, I'm leaving them as they are for this article because this is
-    -- what I actually use, and hey, it works ø\_(?)_/ø.
-      --  vim.cmd [[imap <expr> <C-l> vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>']]
-      --  vim.cmd [[smap <expr> <C-l> vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>']]
-
-      --  vim.cmd [[imap <expr> <Tab> vsnip#jumpable(1) ? '<Plug>(vsnip-jump-next)' : '<Tab>']]
-      --  vim.cmd [[smap <expr> <Tab> vsnip#jumpable(1) ? '<Plug>(vsnip-jump-next)' : '<Tab>']]
-      --  vim.cmd [[imap <expr> <S-Tab> vsnip#jumpable(-1) ? '<Plug>(vsnip-jump-prev)' : '<S-Tab>']]
-      --  vim.cmd [[smap <expr> <S-Tab> vsnip#jumpable(-1) ? '<Plug>(vsnip-jump-prev)' : '<S-Tab>']]
-
-      --  vim.cmd [[inoremap <silent><expr> <C-Space> compe#complete()]]
-      --  vim.cmd [[inoremap <silent><expr> <CR> compe#confirm('<CR>')]]
-      --  vim.cmd [[inoremap <silent><expr> <C-e> compe#close('<C-e>')]]
-      --  vim.cmd [[inoremap <silent><expr> <C-f> compe#scroll({ 'delta': +4 })]]
-      --  vim.cmd [[inoremap <silent><expr> <C-d> compe#scroll({ 'delta': -4 })]]
-  end
+      -- Buffer local mappings.
+      -- See `:help vim.lsp.*` for documentation on any of the below functions
+      local opts = { buffer = ev.buf }
+      vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+      vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+      vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
+      vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
+      vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, opts)
+      vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, opts)
+      vim.keymap.set('n', '<space>wl', function()
+        print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+      end, opts)
+      vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+      vim.keymap.set('n', '<space>f', function()
+        vim.lsp.buf.format { async = true }
+      end, opts)
+    end,
+  })
 
   -- Finally, let's initialize the Elixir language server
-
   -- I'm proxying via a script that sets up asdf
   --local path_to_elixirls = vim.fn.expand("/Users/jacek.szarski/workspace/lib/elixir-ls/runners/0.18.0.sh")
   --local path_to_elixirls = vim.fn.expand("/Users/jacek.szarski/workspace/lib/elixir-ls/runners/1.13-25.1.sh")
@@ -84,7 +82,6 @@ lua <<EOF
   lspconfig.elixirls.setup({
     cmd = { path_to_elixirls },
     capabilities = capabilities,
-    on_attach = on_attach,
     root_dir = vim.fs.dirname(vim.fs.find({'.git'}, { upward = true })[1]),
     settings = {
       elixirLS = {
