@@ -55,8 +55,10 @@ colorscheme catppuccin-mocha
 " nmap <C-h> :bp <CR>
 " nmap <C-m> :bd <CR>
 
-map <C-j> 5j
-map <C-k> 5k
+nmap <C-j> 5j
+vmap <C-j> 5j
+nmap <C-k> 5k
+vmap <C-k> 5k
 
 map <D-a> ggVG<CR>
 
