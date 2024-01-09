@@ -4,8 +4,13 @@ let g:loaded_netrwPlugin = 1
 call plug#begin()
   Plug 'nvim-tree/nvim-web-devicons' " OPTIONAL: for file icons
   Plug 'romgrk/barbar.nvim'
-  Plug 'preservim/nerdtree'
   Plug 'airblade/vim-rooter'
+
+  " Neotree
+  Plug 'nvim-neo-tree/neo-tree.nvim'
+  Plug 'nvim-tree/nvim-web-devicons'
+  Plug 'MunifTanjim/nui.nvim'
+  Plug 's1n7ax/nvim-window-picker'
 
   " Stuff for Elixir LSP
   Plug 'neovim/nvim-lspconfig'
@@ -105,9 +110,9 @@ function! Elocal ()
   return ":e " . expand('%:p:h') . "/"
 endfunction
 
-" NERDTree
-:so $HOME/.config/nvim/config/NERDTree_config.vim
-nmap <Esc><Esc> :call SmartToggleNerdTree() <CR>
+" Neotree and NERDTree
+:so $HOME/.config/nvim/config/tree_config.vim
+nmap <Esc><Esc> :Neotree reveal <CR>
 
 " start in workspace dir
 cd $HOME/workspace
