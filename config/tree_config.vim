@@ -34,15 +34,17 @@ lua <<EOF
     },
   })
 
-  -- If you want icons for diagnostic errors, you'll need to define them somewhere:
-  vim.fn.sign_define("DiagnosticSignError",
-    {text = "? ", texthl = "DiagnosticSignError"})
-  vim.fn.sign_define("DiagnosticSignWarn",
-    {text = "? ", texthl = "DiagnosticSignWarn"})
-  vim.fn.sign_define("DiagnosticSignInfo",
-    {text = "? ", texthl = "DiagnosticSignInfo"})
-  vim.fn.sign_define("DiagnosticSignHint",
-    {text = "??", texthl = "DiagnosticSignHint"})
+  -- -- If you want icons for diagnostic errors, you'll need to define them somewhere:
+  -- vim.fn.sign_define("DiagnosticSignError",
+  --   {text = "? ", texthl = "DiagnosticSignError"})
+  -- vim.fn.sign_define("DiagnosticSignWarn",
+  --   {text = "? ", texthl = "DiagnosticSignWarn"})
+  -- vim.fn.sign_define("DiagnosticSignInfo",
+  --   {text = "? ", texthl = "DiagnosticSignInfo"})
+  -- vim.fn.sign_define("DiagnosticSignHint",
+  --   {text = "??", texthl = "DiagnosticSignHint"})
+
+  local dotfile_regex = ".*/%.[^/]+$"
 
   require("neo-tree").setup({
     close_if_last_window = false, -- Close Neo-tree if it is the last window left in the tab
@@ -51,10 +53,18 @@ lua <<EOF
     enable_diagnostics = true,
     enable_normal_mode_for_inputs = false, -- Enable normal mode for input dialogs.
     open_files_do_not_replace_types = { "terminal", "trouble", "qf" }, -- when opening files, do not use windows containing these filetypes or buftypes
-    sort_case_insensitive = true, -- used when sorting files and directories in the tree
-    sort_function = nil , -- use a custom function for sorting files and directories in the tree 
+    -- sort_case_insensitive = true, -- used when sorting files and directories in the tree
+    -- sort_function = nil , -- use a custom function for sorting files and directories in the tree 
     sort_function = function (a,b)
-      return a.path > b.path
+      if a.path:match(dotfile_regex) and (not b.path:match(dotfile_regex)) then
+        return false
+      else
+        if b.path:match(dotfile_regex) and (not a.path:match(dotfile_regex)) then
+          return true
+        else
+          return string.lower(a.path) < string.lower(b.path)
+        end
+      end
     end, -- sort files only by path, disregard type
     default_component_configs = {
       container = {
@@ -64,15 +74,15 @@ lua <<EOF
         indent_size = 2,
         padding = 1, -- extra padding on left hand side
         -- indent guides
-        with_markers = true,
-        indent_marker = "?",
-        last_indent_marker = "?",
-        highlight = "NeoTreeIndentMarker",
+        with_markers = false,
+        -- indent_marker = "?",
+        -- last_indent_marker = "?",
+        -- highlight = "NeoTreeIndentMarker",
         -- expander config, needed for nesting files
-        with_expanders = nil, -- if nil and file nesting is enabled, will enable expanders
-        expander_collapsed = "?",
-        expander_expanded = "?",
-        expander_highlight = "NeoTreeExpander",
+        -- with_expanders = nil, -- if nil and file nesting is enabled, will enable expanders
+        -- expander_collapsed = "?",
+        -- expander_expanded = "?",
+        -- expander_highlight = "NeoTreeExpander",
       },
       icon = {
         -- folder_closed = "?",
