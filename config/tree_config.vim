@@ -152,10 +152,11 @@ lua <<EOF
       mappings = {
         ["<space>"] = { 
             "toggle_node", 
-            nowait = false, -- disable `nowait` if you have existing combos starting with this char that you want to use 
+            nowait = true, -- disable `nowait` if you have existing combos starting with this char that you want to use 
         },
         ["<2-LeftMouse>"] = "open",
         ["<cr>"] = "open",
+        ["o"] = { "open", nowait = true },
         ["<esc>"] = "cancel", -- close preview or floating neo-tree window
         ["P"] = { "toggle_preview", config = { use_float = true, use_image_nvim = true } },
         -- Read `# Preview Mode` for more information
@@ -234,9 +235,9 @@ lua <<EOF
         leave_dirs_open = true, -- `false` closes auto expanded dirs, such as with `:Neotree reveal`
       },
       group_empty_dirs = false, -- when true, empty folders will be grouped together
-      hijack_netrw_behavior = "open_default", -- netrw disabled, opening a directory opens neo-tree
+      hijack_netrw_behavior = -- "open_default", -- netrw disabled, opening a directory opens neo-tree
                                               -- in whatever position is specified in window.position
-                            -- "open_current",  -- netrw disabled, opening a directory opens within the
+                            "open_current",  -- netrw disabled, opening a directory opens within the
                                               -- window like netrw would, regardless of window.position
                             -- "disabled",    -- netrw left alone, neo-tree does not handle opening dirs
       use_libuv_file_watcher = true, -- This will use the OS level file watchers to detect changes
@@ -254,7 +255,7 @@ lua <<EOF
           ["<c-x>"] = "clear_filter",
           ["[g"] = "prev_git_modified",
           ["]g"] = "next_git_modified",
-          ["o"] = { "show_help", nowait=false, config = { title = "Order by", prefix_key = "o" }},
+          -- ["o"] = { "show_help", nowait=false, config = { title = "Order by", prefix_key = "o" }},
           ["oc"] = { "order_by_created", nowait = false },
           ["od"] = { "order_by_diagnostics", nowait = false },
           ["og"] = { "order_by_git_status", nowait = false },
@@ -262,6 +263,8 @@ lua <<EOF
           ["on"] = { "order_by_name", nowait = false },
           ["os"] = { "order_by_size", nowait = false },
           ["ot"] = { "order_by_type", nowait = false },
+          -- disable fuzzy finder to uncover usual vim search
+          ["/"] = "noop",
         },
         fuzzy_finder_mappings = { -- define keymaps for filter popup window in fuzzy_finder_mode
           ["<down>"] = "move_cursor_down",
@@ -286,7 +289,7 @@ lua <<EOF
           ["bd"] = "buffer_delete",
           ["<bs>"] = "navigate_up",
           ["."] = "set_root",
-          ["o"] = { "show_help", nowait=false, config = { title = "Order by", prefix_key = "o" }},
+          -- ["o"] = { "show_help", nowait=false, config = { title = "Order by", prefix_key = "o" }},
           ["oc"] = { "order_by_created", nowait = false },
           ["od"] = { "order_by_diagnostics", nowait = false },
           ["om"] = { "order_by_modified", nowait = false },
@@ -307,7 +310,7 @@ lua <<EOF
           ["gc"] = "git_commit",
           ["gp"] = "git_push",
           ["gg"] = "git_commit_and_push",
-          ["o"] = { "show_help", nowait=false, config = { title = "Order by", prefix_key = "o" }},
+          -- ["o"] = { "show_help", nowait=false, config = { title = "Order by", prefix_key = "o" }},
           ["oc"] = { "order_by_created", nowait = false },
           ["od"] = { "order_by_diagnostics", nowait = false },
           ["om"] = { "order_by_modified", nowait = false },
