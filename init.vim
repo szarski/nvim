@@ -106,6 +106,8 @@ endfunction
 " Neotree and NERDTree
 :so $HOME/.config/nvim/config/tree_config.vim
 nmap <Esc><Esc> :Neotree reveal <CR>
+" When opening a file from quickfix findow, switch the window first
+autocmd FileType qf nnoremap <buffer> <Enter> <C-^><Enter>
 
 " start in workspace dir
 cd $HOME/workspace
