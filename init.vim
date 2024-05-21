@@ -2,6 +2,9 @@
 let g:loaded_netrw       = 1
 let g:loaded_netrwPlugin = 1
 
+" Disable SWAP files
+set updatecount=0
+
 call plug#begin()
   Plug 'nvim-tree/nvim-web-devicons' " OPTIONAL: for file icons
   Plug 'romgrk/barbar.nvim'
