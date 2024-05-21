@@ -43,6 +43,9 @@ call plug#begin()
   " colorschemes
   Plug 'folke/tokyonight.nvim'
   Plug 'catppuccin/nvim'
+
+  " GitHub Copilot!
+  Plug 'github/copilot.vim'
 call plug#end()
 PlugInstall | quit
 
