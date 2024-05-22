@@ -35,9 +35,7 @@ lua <<EOF
 
   -- Finally, let's initialize the Elixir language server
   -- I'm proxying via a script that sets up asdf
-  --local path_to_elixirls = vim.fn.expand("/Users/jacek.szarski/workspace/lib/elixir-ls/runners/0.18.0.sh")
-  --local path_to_elixirls = vim.fn.expand("/Users/jacek.szarski/workspace/lib/elixir-ls/runners/1.13-25.1.sh")
-  local path_to_elixirls = vim.fn.expand("/Users/jacek.szarski/workspace/lib/elixir-ls/runners/1.13-24.3.sh")
+  local path_to_elixirls = vim.fn.expand("/Users/jacek.szarski/workspace/language-servers/elixir-ls/runners/1.13-25.1.sh")
 
   -- Neovim doesn't support snippets out of the box, so we need to mutate the
   -- capabilities we send to the language server to let them know we want snippets.
