@@ -46,7 +46,10 @@ call plug#begin()
 call plug#end()
 PlugInstall | quit
 
-colorscheme catppuccin-mocha
+
+if exists("g:neovide")
+  colorscheme catppuccin-mocha
+endif
 
 " " normal mode
 " nmap <C-l> :bn <CR>
