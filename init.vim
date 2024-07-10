@@ -43,6 +43,9 @@ call plug#begin()
   " colorschemes
   Plug 'folke/tokyonight.nvim'
   Plug 'catppuccin/nvim'
+
+  " Opening files in quickfix window
+  Plug 'yssl/QFEnter'
 call plug#end()
 PlugInstall | quit
 
